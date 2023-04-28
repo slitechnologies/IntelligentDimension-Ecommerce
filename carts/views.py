@@ -48,8 +48,6 @@ def add_cart(request, product_id):
             exist_var_list.append(list(existing_variation))
             id.append(item.id)
 
-        print(exist_var_list)
-
         if product_variation in exist_var_list:
             # increase cart item quantity
             index = exist_var_list.index(product_variation)
@@ -60,9 +58,10 @@ def add_cart(request, product_id):
         else:
             # create cart item
             item = CartItem.objects.create(product=product, quantity=1, cart=cart)
-            if len(product_variation) > 0:
+            if len(product_variation) > 0: # altered
                 item.variations.clear()
                 item.variations.add(*product_variation)
+
                 # cart_item.quantity += 1 # cart_item added
             item.save()
 
@@ -120,7 +119,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         tax = (2 * total)/100
         grand_total = total + tax
 
-    except CartItem.DoesNotExist:
+    except: # CartItem.DoesNotExist
         pass
 
     context = {'total': total, 'quantity': quantity,

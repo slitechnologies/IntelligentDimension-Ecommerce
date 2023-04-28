@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from datetime import date
 
 # Account Manager model
 class UserAccountManager( BaseUserManager):
@@ -29,6 +30,7 @@ class UserAccountManager( BaseUserManager):
             password = password,
             first_name = first_name,
             last_name = last_name,
+
         )
 
         user.is_admin = True
@@ -46,6 +48,7 @@ class Account(AbstractBaseUser):
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=15)
+    dob = models.DateField(blank=True, null=True)
 
     # required fields
 
@@ -69,3 +72,9 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, add_label):
         return True
+
+    @property
+    def age(self):
+        if self.dob != None:
+            age = date.today().year - self.dob.year
+            return age

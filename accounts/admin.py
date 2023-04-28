@@ -4,7 +4,7 @@ from . models import Account
 
 # Registering My models
 class AccountAdmin(UserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'username', 'last_login', 'date_joined', 'is_active')
+    list_display = ('email', 'first_name', 'last_name', 'username','dob', 'age', 'last_login', 'date_joined', 'is_active')
     list_display_links = ('email', 'first_name', 'last_name', 'username')
     readonly_fields = ('last_login', 'date_joined')
     ordering = ('-date_joined',)
