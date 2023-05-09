@@ -5,8 +5,11 @@ from . models import Order, Payment, OrderProduct
 from store.models import Product
 import datetime
 import json
+from django.http import HttpResponse, JsonResponse
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
 
-from django.http import HttpResponse
+
 
 
 def payments(request):
@@ -59,8 +62,19 @@ def payments(request):
 
 
     # send order received email to customer
+    mail_subject = 'Thank you for ordering with us!'
+    message = render_to_string('orders/order_received_email.html', {
+        'user': request.user,
+        'order': order,
+        })
+
+    to_mail = request.user.email
+    send_mail = EmailMessage(mail_subject, message, to=[to_mail])
+    # send_mail.send()
     # send order number and transaction id back to sendData() method via JsonResponse
-    return render(request, 'orders/payments.html')
+
+    data = {'order_number': order.order_number, 'transID': payment.payment_id }
+    return JsonResponse(data)
 
 
 def place_order(request, total=0, quantity=0):
@@ -125,3 +139,28 @@ def place_order(request, total=0, quantity=0):
             return render(request, 'orders/payments.html', context)
         else:
             return redirect('checkout')
+
+
+def order_complete(request):
+    # For the items in our order items for order complete page
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+        payment = Payment.objects.get(payment_id=transID)
+
+        subtotal = 0
+
+        for p in ordered_products:
+            subtotal += p.product_price * p.quantity
+
+        context = {'order': order, 'ordered_products': ordered_products,
+         'order_number': order.order_number , 'transID': payment.payment_id,
+         'payment': payment, 'subtotal': subtotal
+          }
+
+        return render(request, 'orders/order_complete.html', context)
+    except(Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('index')
