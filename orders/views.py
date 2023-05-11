@@ -70,7 +70,7 @@ def payments(request):
 
     to_mail = request.user.email
     send_mail = EmailMessage(mail_subject, message, to=[to_mail])
-    # send_mail.send()
+    send_mail.send()
     # send order number and transaction id back to sendData() method via JsonResponse
 
     data = {'order_number': order.order_number, 'transID': payment.payment_id }
