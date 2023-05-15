@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
-from . models import Product, ReviewRating
+from . models import Product, ReviewRating, ProductGallery
 from classification.models import Classification
 from carts.models import CartItem
 from carts.views import _cart_id
@@ -8,6 +8,7 @@ from django.db.models import Q
 from . forms import ReviewForm
 from django.contrib import messages
 from orders.models import OrderProduct
+from accounts.models import UserProfile
 
 
 # Main store page with all products
@@ -32,6 +33,7 @@ def store(request, classification_slug=None):
 
     return render(request, 'store/store.html', context)
 
+
 # Product specific detail
 def product_detail(request, classification_slug, product_slug):
     try:
@@ -52,9 +54,15 @@ def product_detail(request, classification_slug, product_slug):
     # Get Reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
 
+    # Get the product gallery
+
+    products_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+    userprofile = UserProfile.objects.get(user_id=request.user.id)
+
     context = {
     'single_product': single_product, 'in_cart': in_cart,
-     'orderProduct': orderProduct, 'reviews': reviews
+     'orderProduct': orderProduct, 'reviews': reviews,
+     'products_gallery': products_gallery, 'userprofile': userprofile
      }
 
     return render(request, 'store/product_detail.html', context)

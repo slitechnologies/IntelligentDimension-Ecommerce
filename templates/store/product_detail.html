@@ -13,11 +13,22 @@
   <div class="row no-gutters">
     <aside class="col-md-6">
   <article class="gallery-wrap">
-  <div class="img-big-wrap">
-     <a href="#"><img src="{{ single_product.images.url }}"></a>
+  <div class="img-big-wrap mainImage">
+    <center><img src="{{ single_product.images.url }}"></center>
   </div> <!-- img-big-wrap.// -->
 
   </article> <!-- gallery-wrap .end// -->
+  <ul class="thumb">
+
+      <li>
+        <a href="{{ single_product.images.url }}" target="mainImage"><img src="{{ single_product.images.url }}" alt="Product Images"></a>
+        {% for image in products_gallery %}
+          <a href="{{ image.images.url }}" target="mainImage"><img src="{{ image.images.url }}" alt="Product Images"></a>
+        {% endfor %}
+      </li>
+
+
+  </ul>
     </aside>
     <main class="col-md-6 border-left">
 
@@ -142,12 +153,12 @@
 
          <div class="rating-star">
            <span>
-             <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-half-o{% elif  single_product.averageReview >= 0.5 and  single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
-             <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-half-o{% elif  single_product.averageReview >= 1.5 and  single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
-             <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-half-o{% elif  single_product.averageReview >= 2.5 and  single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
-             <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-half-o{% elif  single_product.averageReview >= 3.5 and  single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
-             <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-half-o{% elif  single_product.averageReview >= 4.5 and  single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
-              <span>{{ single_product.countReview}} product reviews </span> <span> with an average rating of  {{ single_product.averageReview }}</span>
+             <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif  single_product.averageReview >= 0.5 and  single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+             <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif  single_product.averageReview >= 1.5 and  single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+             <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif  single_product.averageReview >= 2.5 and  single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+             <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif  single_product.averageReview >= 3.5 and  single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+             <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif  single_product.averageReview >= 4.5 and  single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+            <span>{{ single_product.countReview}} product reviews </span>    <span> with an average rating of  {{ single_product.averageReview }}</span> 
          </span>
          </div>
 
@@ -157,7 +168,7 @@
     {% for review in reviews %}
         <article class="box mb-3">
           <div class="icontext w-100">
-            <img src="{% static './images/avatars/avatar1.jpg' %}" class="img-xs icon rounded-circle">
+            <img src="{{userprofile.profile_picture.url}}"  alt=" reviewing customer image" class="img-xs icon rounded-circle">
             <div class="text">
               <span class="date text-muted float-md-right"> {{ review.updated_at }} </span>
               <h6 class="mb-1">{{review.user.full_name}} </h6>

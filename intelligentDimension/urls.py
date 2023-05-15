@@ -21,7 +21,8 @@ from django.conf import settings
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('secureLogin/', admin.site.urls),
     path('', views.index, name='index'),
     path('store/', include('store.urls')),
     path('carts/', include('carts.urls')),
