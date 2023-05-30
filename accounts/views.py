@@ -161,7 +161,13 @@ def activate(request, uidb64, token):
 def dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+    userprofile = None
+    try:
+        userprofile = UserProfile.objects.get(user_id=request.user.id)
+    except:
+        # profile_form = UserProfileForm(instance=userprofile)
+        pass
+
     context = {
     'orders_count': orders_count,
     'userprofile': userprofile

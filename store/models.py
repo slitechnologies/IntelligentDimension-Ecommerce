@@ -11,12 +11,38 @@ class Product(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     description = models.TextField(max_length=500, blank=True)
     price = models.DecimalField(max_digits=7, decimal_places=2)
+    mileage = models.IntegerField(default=0, blank=True, null=True)
+    steering = models.CharField(max_length=5, blank=True, null=True)
+    make = models.CharField(max_length=50, blank=True, null=True)
+    product_model = models.CharField(max_length=50, blank=True, null=True)
+    fuel = models.CharField(max_length=10, null=True)
+    location = models.CharField(max_length=50,blank=True, null=True)
+    product_state  = models.CharField(max_length=50, blank=True, null=True)
+    chasis_number = models.CharField(max_length=20, blank=True, null=True)
+    engine_number = models.CharField(max_length=20, blank=True, null=True)
+    product_year =  models.DateField(blank=True, null=True)
+    product_color = models.CharField(max_length=20, blank=True, null=True)
+    transmission = models.CharField(max_length=20, blank=True, null=True)
+    first_registration_year =  models.DateField(blank=True, null=True)
+    number_of_doors = models.IntegerField(default=0, blank=True, null=True)
+    number_of_seats = models.IntegerField(default=0, blank=True, null=True)
+    dimensions = models.CharField(max_length=50, blank=True, null=True)
+    drive = models.CharField(max_length=50, blank=True, null=True)
+    m_spec = models.CharField(max_length=20, blank=True, null=True)
+    engine_capacity = models.CharField(max_length=20, blank=True, null=True)
+    version = models.CharField(max_length=20, blank=True, null=True)
+    weight = models.CharField(max_length=20, blank=True, null=True)
+    max_capacity = models.CharField(max_length=20, blank=True, null=True)
     images = models.ImageField(upload_to='photos/products')
     stock = models.IntegerField()
     is_available = models.BooleanField(default=True)
     classification = models.ForeignKey(Classification, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+
+
+    class Meta:
+        ordering = ['-created_date']
 
     def get_url(self):
         return reverse('products_detail', args=[self.classification.slug, self.slug])
@@ -47,6 +73,12 @@ class VariationManager(models.Manager):
     def colors(self):
         return super(VariationManager, self).filter(variation_class='color', is_active=True)
 
+    def brand(self):
+        return super(VariationManager, self).filter(variation_class='brand', is_active=True)
+
+    def fuel(self):
+        return super(VariationManager, self).filter(variation_class='fuel', is_active=True)
+
     def sizes(self):
         return super(VariationManager, self).filter(variation_class='size', is_active=True)
 
@@ -54,6 +86,8 @@ class VariationManager(models.Manager):
 variation_class_choice = (
     ('color','color'),
     ('size', 'size'),
+    ('brand', 'brand'),
+    ('fuel', 'fuel'),
 )
 
 

@@ -24,7 +24,7 @@ def store(request, classification_slug=None):
         product_count = products.count()
     else:
         products = Product.objects.all().filter(is_available=True).order_by('id')
-        paginator = Paginator(products, 9)
+        paginator = Paginator(products, 12)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
@@ -57,7 +57,12 @@ def product_detail(request, classification_slug, product_slug):
     # Get the product gallery
 
     products_gallery = ProductGallery.objects.filter(product_id=single_product.id)
-    userprofile = UserProfile.objects.get(user_id=request.user.id)
+    userprofile = None
+    try:
+        userprofile = UserProfile.objects.get(user_id=request.user.id)
+    except:
+        messages.error(request, 'Login first ')
+        return redirect('login')
 
     context = {
     'single_product': single_product, 'in_cart': in_cart,
@@ -72,7 +77,9 @@ def search(request):
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
-            products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keyword)| Q(product_name__icontains=keyword))
+            products = Product.objects.order_by('-created_date').filter(Q(description__icontains=keyword)| Q(product_name__icontains=keyword) |
+             Q(product_color__icontains=keyword)| Q(drive__icontains=keyword) | Q(transmission__icontains=keyword) | Q(fuel__icontains=keyword) |
+              Q(product_year__icontains=keyword))
             product_count = products.count()
     context = {'products': products, 'product_count': product_count}
     return render(request, 'store/store.html', context)

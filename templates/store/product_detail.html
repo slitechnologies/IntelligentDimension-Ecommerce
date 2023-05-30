@@ -39,13 +39,12 @@
               <h2 class="title">{{ single_product.product_name }}</h2>
 
               <div class="rating-star">
-
                 <span>
-                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-half-o{% elif  single_product.averageReview >= 0.5 and  single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-half-o{% elif  single_product.averageReview >= 1.5 and  single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-half-o{% elif  single_product.averageReview >= 2.5 and  single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-half-o{% elif  single_product.averageReview >= 3.5 and  single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
-                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-half-o{% elif  single_product.averageReview >= 4.5 and  single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif  single_product.averageReview >= 0.5 and  single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif  single_product.averageReview >= 1.5 and  single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif  single_product.averageReview >= 2.5 and  single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif  single_product.averageReview >= 3.5 and  single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif  single_product.averageReview >= 4.5 and  single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
                   <span>{{ single_product.countReview}} product reviews </span> <span> with an average rating of  {{ single_product.averageReview }}</span>
               </span>
 
@@ -58,7 +57,7 @@
               <p>{{ single_product.description }}</p>
 
               <hr>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="item-option-select">
                   <h6>Choose Color</h6>
                     <select class="form-control" name="color" required>
@@ -74,7 +73,7 @@
               </div> <!-- row.// -->
               <div class="row">
                 <div class="item-option-select">
-                  <h6>Select Size</h6>
+                  <!-- <h6>Select Size</h6>
                     <select class="form-control" name="size" required>
                       <option value="" disabled selected>Select</option>
                       {% for value in single_product.variation_set.sizes %}
@@ -82,7 +81,96 @@
                         <option value="{{ value.variation_value | lower }}">{{ value.variation_value | capfirst }}</option>
 
                       {% endfor %}
-                     </select>
+                     </select> -->
+                      <div class="col-lg-12">
+                          <!-- col-lg-12 start here -->
+                          <div class="invoice-details mt25">
+                              <div class="well">
+                                  <div class="sc headline">
+                                  <div>
+                                    <!-- <img src="/assets/images/veh_detail/file-icon.svg" class="img-icon" alt="file-icon"> -->
+                                    <span class="text-middle specs-pickup-h-text"><strong>Product Specs</strong></span>
+                                    <br>
+                                    <br>
+                                  </div>
+                                  <div class="specs-pickup-h-text">
+                                    <span class="specs-pickup-text">Location</span>
+                                    <span class="specs-pickup-icon"><i class="i-47"><i class="fa-solid fa-location-pin"></i></i><b>{{single_product.location}}</b></span>
+                                  </div>
+                                  </div>
+
+
+                                  	<table cellpadding="0" cellspacing="0" class=" table specification">
+                                  					<tr>
+                                  						<th class="gray">Ref. No.</th>
+                                  						<td>ID{{single_product.id}}</td>
+                                  						<th class="gray">Mileage</th>
+                                  						<td> {{single_product.mileage}}  km </td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Chassis No.</th>
+                                  						<td> {{single_product.chasis_number}} </td>
+                                  						<th class="gray">Engine Code</th>
+                                  						<td>{{single_product.engine_number}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Model Code</th>
+                                  						<td>
+                                  						{{single_product.product_model}}
+                                  						</td>
+                                  						<th class="gray">Steering</th>
+                                  						<td>{{single_product.steering}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Engine Size</th>
+                                  						<td>{{ single_product.engine_capacity}}cc</td>
+                                  						<th class="gray">Ext. Color</th>
+                                  						<td> {{single_product.product_color}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Location</th>
+                                  						<td>{{single_product.location}}</td>
+                                  						<th class="gray">Fuel</th>
+                                  						<td>{{single_product.fuel}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Version/Class</th>
+                                  						<td>{{ single_product.version}}</td>
+                                  						<th class="gray-cell">Seats</th>
+                                  						<td>{{ single_product.number_of_seats}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Drive</th>
+                                  						<td>{{ single_product.drive}}</td>
+                                  						<th class="gray-cell">Doors</th>
+                                  						<td>5</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray">Transmission</th>
+                                  						<td>{{single_product.transmission}}</td>
+                                  						<th class="gray-cell">M3</th>
+                                  						<td>{{ single_product.m_spec}}</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray"><span class="orange">Registration<br/>Year/month</span></th>
+                                  						<td>{{single_product.first_registration_year}}</td>
+                                  						<th class="gray-cell">Dimension</th>
+                                  						<td>{{single_product.dimensions}}m</td>
+                                  					</tr>
+                                          	<tr>
+                                  					<th class="gray" rowspan="2"><span class="green">Manufacture<br/>Year/month</span></th>
+                                  					<td rowspan="2">{{single_product.product_year}}</td>
+                                  						<th class="gray-cell">Weight</th>
+                                  						<td>{{ single_product.weight}} kg</td>
+                                  					</tr>
+                                  					<tr>
+                                  						<th class="gray-cell">Max.Cap</th>
+                                              <td>{{single_product.max_capacity}}</td>
+                                  					</tr>
+                                    </table>
+                              </div>
+                          </div>
+                      </div>
                 </div>
               </div> <!-- row.// -->
               <hr>
@@ -104,7 +192,6 @@
       <div class="col-md-9">
 
     <form class="" action="{% url 'submit_review' single_product.id %}" method="post">
-
       {% csrf_token %}
       <h5>Write Your Review:</h5>
       <div class="">
@@ -135,7 +222,7 @@
             {% if orderProduct %}
               <input type="submit" class="btn btn-primary" value="Submit Review" />
             {% else %}
-              <p> You must purchase the product, for you to be able to post a review <span><a href="{% url 'store' %}">Buy it now !</a></span> </p>
+              <p> You must purchase the product, for you to be able to post a review <span><a href="{% url 'add_cart' single_product.id %}">Buy it now !</a></span> </p>
             {% endif %}
           {% else %}
             <p> You must be logged in, for you to post a review <span><a href="{% url 'login' %}">Login now !</a></span> </p>
@@ -158,7 +245,7 @@
              <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif  single_product.averageReview >= 2.5 and  single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
              <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif  single_product.averageReview >= 3.5 and  single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
              <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif  single_product.averageReview >= 4.5 and  single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
-            <span>{{ single_product.countReview}} product reviews </span>    <span> with an average rating of  {{ single_product.averageReview }}</span> 
+            <span>{{ single_product.countReview}} product reviews </span>    <span> with an average rating of  {{ single_product.averageReview }}</span>
          </span>
          </div>
 
@@ -206,6 +293,119 @@
   </div> <!-- container .//  -->
   </section>
   <!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- <div id="spec" class="cf specs-area"> -->
+<!-- start -->
+<!--
+<div class="sc headline">
+<div>
+  <i class="fa-solid fa-file"></i>
+  <!-- <img src="/assets/images/veh_detail/file-icon.svg" class="img-icon" alt="file-icon"> -->
+  <!-- <span class="text-middle specs-pickup-h-text">Specs</span>
+</div>
+<div class="specs-pickup-h-text">
+  <span class="specs-pickup-text">Location</span><i class="fa-solid fa-location-pin"></i>
+  <span class="specs-pickup-icon"><i class="i-47"></i><b>{{single_product.first_registration_year}}</b></span>
+</div>
+</div>
+
+  <div class="card">
+    <table>
+        <tr>
+            <td class="specs-pickup-text" valign="top">Mileage</td>
+            <td class="specs-pickup-text" valign="top">Year</td>
+            <td class="specs-pickup-text" valign="top">Engine</td>
+            <td class="specs-pickup-text" valign="top">Trans.</td>
+            <td class="specs-pickup-text" valign="top">Fuel</td>
+        </tr>
+        <tr>
+            <td class="pickup-specification-text" valign="middle">
+                                                        			45,768 km
+
+                            </td>
+            <td class="pickup-specification-text" valign="middle">
+                                    2017/8                            </td>
+            <td class="pickup-specification-text" valign="middle">
+                                    2,140cc
+                            </td>
+            <td class="pickup-specification-text" valign="middle">
+
+                AT
+            </td>
+            <td class="pickup-specification-text" valign="middle">
+                Diesel
+            </td>
+        </tr>
+    </table>
+</div> -->
+
+
+	<!-- <div class="specification-comment">
+
+			<p>
+				<span class="orange bold">* [Registration Year/month] </span>
+				 is a registration date in Stock Country.
+			</p>
+																<p><span class="bold">You need to look up the Import Regulation of your country for this vehicle.</span></p>
+		<p><span class="bold">The actual dimension,M3 and Weight may differ from the above one.</span></p>
+	</div>
+
+	<div class="specification-border-space"></div>
+
+	<div class="remarks">
+		<p class="list-title">FEATURES</p>
+		<ul>
+			<li class="attached_on" >CD Player</li>
+			<li class="attached_off" >Sun Roof</li>
+			<li class="attached_off" >Leather Seat</li>
+			<li class="attached_on" >Alloy Wheels</li>
+		</ul>
+		<ul>
+			<li class="attached_on" >Power Steering</li>
+			<li class="attached_on" >Power Window</li>
+			<li class="attached_on" >A/C</li>
+			<li class="attached_on" >ABS</li>
+		</ul>
+		<ul>
+			<li class="attached_on" >Airbag</li>
+			<li class="attached_on" >Radio</li>
+			<li class="attached_off" >CD Changer</li>
+			<li class="attached_on" >DVD</li>
+		</ul>
+		<ul>
+			<li class="attached_off" >TV</li>
+			<li class="attached_on" >Power Seat</li>
+			<li class="attached_off" >Back Tire</li>
+			<li class="attached_off" >Grill Guard</li>
+		</ul>
+		<ul>
+			<li class="attached_on" >Rear Spoiler</li>
+			<li class="attached_off" >Central Locking</li>
+			<li class="attached_off" >Jack</li>
+			<li class="attached_off" >Spare Tire</li>
+		</ul>
+		<ul>
+			<li class="attached_off" >Wheel Spanner</li>
+			<li class="attached_off" >Fog Lights</li>
+			<li class="attached_on" >Back Camera</li>
+			<li class="attached_on" >Push Start</li>
+		</ul>
+		<ul>
+			<li class="attached_on" >Keyless Entry</li>
+			<li class="attached_on" >ESC</li>
+			<li class="attached_on" >360 Degree Camera</li>
+			<li class="attached_off" >Body Kit</li>
+		</ul>
+		<ul>
+			<li class="attached_off" >Side Airbag</li>
+			<li class="attached_off" >Power Mirror</li>
+			<li class="attached_off" >Side Skirts</li>
+			<li class="attached_off" >Front Lip Spoiler</li>
+		</ul>
+		<ul>
+			<li class="attached_on" >Navigation</li>
+			<li class="attached_off" >Turbo</li>
+		</ul>
+	</div><!-- .remarks -->
 
 
 {% endblock %}
